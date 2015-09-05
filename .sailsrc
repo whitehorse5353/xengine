@@ -1,7 +1,8 @@
 {
   "generators": {
     "modules": {
-      "component" : "./reactview"
+      "component" : "./reactview",
+      "publisher" : "./pagepublisher"
     }
   }
 }

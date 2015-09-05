@@ -33,8 +33,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
-  }
+    view: 'contentDesign'
+  },
+  'post /createPage': 'ContentDesignController.createPage'
 
   /***************************************************************************
   *                                                                          *

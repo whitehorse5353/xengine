@@ -1,6 +1,0 @@
-.tmp/*
-src/styles/.tmp_styles/*
-node_modules/*
-qualitymetrics/
-dist/*
-/bin

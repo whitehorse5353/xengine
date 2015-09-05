@@ -4,16 +4,16 @@
 
 var util = require('util');
 var _ = require('lodash');
-var request = require('superagent');
 _.defaults = require('merge-defaults');
 
+
 /**
- * sails-generate-reactview
+ * sails-generate-pagepublisher
  *
  * Usage:
- * `sails generate reactview`
+ * `sails generate pagepublisher`
  *
- * @description Generates a reactview
+ * @description Generates a pagepublisher
  * @help See http://links.sailsjs.org/docs/generators
  */
 
@@ -31,28 +31,14 @@ module.exports = {
    */
 
   before: function (scope, cb) {
-    var resolverPath = 'http://localhost:1337/componentCollection';
-    request.get(resolverPath)
-      .end(function(err, res){
-        if(err){
-          return cb( new Error('Please check weather sails is up and running properly') );
-        }
-        request.post(resolverPath)
-          .send({componentName: scope.args[0]}) // rest of the component details can be inserted later
-          .end(function(error, response){
-            if(error){
-              return cb( new Error(scope.args[0]+ " component didn't created properly") );
-            }
-          });
-      });
 
     // scope.args are the raw command line arguments.
     //
     // e.g. if someone runs:
-    // $ sails generate reactview user find create update
+    // $ sails generate pagepublisher user find create update
     // then `scope.args` would be `['user', 'find', 'create', 'update']`
     if (!scope.args[0]) {
-      return cb( new Error('Please provide a name for this reactview.') );
+      return cb( new Error('Please provide a name for this pagepublisher.') );
     }
 
     // scope.rootPath is the base path for this generator
@@ -102,13 +88,10 @@ module.exports = {
     // The `template` helper reads the specified template, making the
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
-
-    './component-factory/:filename/views/:filename.js': { template: 'view.js' },
-    './component-factory/:filename/index.html': { template: 'index.js' },
-    './component-factory/:filename/styles/:filename.scss': { template: 'sampleSCSS.js' }
+    './:filename': { template: 'example.template.js' },
 
     // Creates a folder at a static path
-    //'./component-factory/:filename': { template: 'example.template.js' }
+    './assets/:filename': { folder: {} }
 
   },
 
@@ -142,9 +125,9 @@ module.exports = {
 
 function INVALID_SCOPE_VARIABLE (varname, details, message) {
   var DEFAULT_MESSAGE =
-  'Issue encountered in generator "reactview":\n'+
+  'Issue encountered in generator "pagepublisher":\n'+
   'Missing required scope variable: `%s`"\n' +
-  'If you are the author of `sails-generate-reactview`, please resolve this '+
+  'If you are the author of `sails-generate-pagepublisher`, please resolve this '+
   'issue and publish a new patch release.';
 
   message = (message || DEFAULT_MESSAGE) + (details ? '\n'+details : '');

@@ -1,1 +1,0 @@
-var React = require("react") var View = require("./views/previewView.jsx") React.render( <View />, document.getElementById("preview"));
