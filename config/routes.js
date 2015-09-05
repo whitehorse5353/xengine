@@ -35,7 +35,9 @@ module.exports.routes = {
   '/': {
     view: 'contentDesign'
   },
-  'post /createPage': 'ContentDesignController.createPage'
+  'post /createPage': 'ContentDesignController.createPage',
+  'get /createPage/:pageId': 'ContentDesignController.loadExistingPage',
+  'post /addOptions/:pageId': 'ContentDesignController.addOptions'
 
   /***************************************************************************
   *                                                                          *
