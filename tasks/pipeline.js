@@ -35,6 +35,9 @@ var jsFilesToInject = [
   'js/**/*.js'
 ];
 
+var componentFilesToInject = [
+  'component-factory/**/*.js'
+];
 
 // Client-side HTML templates are injected using the sources below
 // The ordering of these templates shouldn't matter.
@@ -62,4 +65,7 @@ module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
 });
 module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
   return 'assets/' + path;
+});
+module.exports.componentFilesToInject = componentFilesToInject.map(function(path) {
+  return '../' + path;
 });

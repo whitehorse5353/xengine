@@ -12,6 +12,7 @@ $('#optionSubmit').submit(function (e) {
   }).success(function (e) {
     if(e  === 'OK'){
       $('#target').modal('toggle');
+      window.location.reload();
     }
   })
 });

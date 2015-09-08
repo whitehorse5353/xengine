@@ -37,7 +37,8 @@ module.exports.routes = {
   },
   'post /createPage': 'ContentDesignController.createPage',
   'get /createPage/:pageId': 'ContentDesignController.loadExistingPage',
-  'post /addOptions/:pageId': 'ContentDesignController.addOptions'
+  'post /addOptions/:pageId': 'ContentDesignController.addOptions',
+  'post /publishPage/:pageId': 'ContentDesignController.publishPage'
 
   /***************************************************************************
   *                                                                          *

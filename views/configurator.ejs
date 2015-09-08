@@ -1,13 +1,17 @@
 <div class="container span9">
 
-  <form class="form-signin" method="post" action="/createPage">
+  <form class="form-signin" method="post" action="/publishPage/<%=pageRefId%>">
     <h2 class="form-signin-heading">XE - Content Designer</h2>
     <h5 class="form-signin-heading">Page root - <%= pageName %></h5>
-
     <div class="col-md-8">
       <fieldset>
         <legend>Live Page Viewer</legend>
-        <%- partial('editor', {pageLevelComponents: pageLevelComponents}) %>
+        <div class="container col-md-12">
+          <%- partial('editor', {
+            pageLevelComponents: pageLevelComponents,
+            pageLevelComponentsString: pageLevelComponentsString
+          }) %>
+        </div>
       </fieldset>
     </div>
     <div class="col-md-4">

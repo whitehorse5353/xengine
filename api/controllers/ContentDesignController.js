@@ -5,21 +5,70 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var exec = require('child_process').exec;
+var React = require('react');
+var _ = require('lodash');
+var path = require('path');
+var componentFactory = path.resolve(__dirname, '../../component-factory');
+
+function _simpleUtil(filename) {
+  return filename.substring(0, 1).toUpperCase() + filename.substring(1, filename.length)
+}
+
+function getComponents(components) {
+  return _.map(components, function (val, key) {
+    return {
+      componentPath: componentFactory + '/' + key + '/views/' + key,
+      classPath: [_simpleUtil(key)],
+      componentMetaData: val
+    };
+  });
+}
+
+function renderComponents(componentsMetaData) {
+  require('node-jsx').install();
+  return _.map(componentsMetaData, function (componentMetaData) {
+    var Component = require(componentMetaData.componentPath)[componentMetaData.classPath];
+    return React.renderToString(React.createElement(Component,
+      {
+        data: componentMetaData.componentMetaData[componentMetaData.componentMetaData.length - 1].title
+      }));
+  });
+}
+
+function executePublisher(pageMetaData, componentMeta, res){
+  var exec = require('child_process').exec;
+  exec('sails generate publisher ' + pageMetaData.pageName+' '+_.keys(componentMeta).join(' '), function (error, stdout, stderr) {
+    console.log(stdout);
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+
+    res.end('thanks');
+  });
+}
 
 module.exports = {
   createPage: function (req, res) {
     PageProperties.create({pageName: req.param('pageroot')})
       .exec(function (er, dt) {
         if (er) return res.badRequest(er);
-        res.redirect('/createPage/'+dt.id);
+        res.redirect('/createPage/' + dt.id);
       });
 
   },
-  loadExistingPage: function(req, res){
+  loadExistingPage: function (req, res) {
     PageProperties.findOne(req.params['pageId'])
-      .exec(function(err, pageMetaData){
+      .exec(function (err, pageMetaData) {
         if (err) return res.error(err);
+        var ComponentsMeta = getComponents(pageMetaData.components),
+          Components = renderComponents(ComponentsMeta);
+
+        //todo: this block of code has to be moved out of this asap
+        //var browserify = require('browserify');
+        //var b = browserify();
+        //b.transform(babelify);
+        //b.require(ComponentRoot, {entry: true});
+        //b.bundle().pipe(process.stdout);
 
         ComponentCollection.find()
           .exec(function (err, components) {
@@ -28,7 +77,8 @@ module.exports = {
               components: components,
               pageName: pageMetaData.pageName,
               pageRefId: req.params['pageId'],
-              pageLevelComponents: pageMetaData.components
+              pageLevelComponents: pageMetaData.components,
+              pageLevelComponentsString: Components.join('')
             });
           });
       });
@@ -38,9 +88,9 @@ module.exports = {
       .exec(function (err, record) {
         if (err) return res.error(err);
 
-        if(record.components[req.query.component]){
+        if (record.components[req.query.component]) {
           record.components[req.query.component].push(req.query);
-        }else{
+        } else {
           record.components[req.query.component] = [req.query];
         }
         record.save(function (er, dt) {
@@ -50,14 +100,17 @@ module.exports = {
     return res.ok(200);
     //return res.redirect('/createPage/'+req.params['pageId']);
   },
-  publishPage: function () {
-    exec('sails generate publisher ' + req.param('pageroot'), function (error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-      res.end('thanks');
-    });
+  publishPage: function (req, res) {
+    PageProperties.findOne(req.params['pageId'])
+      .exec(function (err, pageMetaData) {
+        if (err) return res.error(err);
+        var componentMeta = {};
+        _.each(getComponents(pageMetaData.components), function (component) {
+          componentMeta[component.classPath] = component.componentPath;
+        });
+
+        executePublisher(pageMetaData, componentMeta, res);
+      });
   }
 };
 

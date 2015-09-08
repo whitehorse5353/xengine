@@ -40,7 +40,7 @@ module.exports = {
     if (!scope.args[0]) {
       return cb( new Error('Please provide a name for this pagepublisher.') );
     }
-
+    console.log(scope.args);
     // scope.rootPath is the base path for this generator
     //
     // e.g. if this generator specified the target:
@@ -63,6 +63,9 @@ module.exports = {
 
     // Add other stuff to the scope for use in our templates:
     scope.whatIsThis = 'an example file created at '+scope.createdAt;
+
+    // Collecting component array from cmd
+    scope.components = scope.args.slice(1, scope.args.length);
 
     // When finished, we trigger a callback with no error
     // to begin generating files/folders as specified by
@@ -88,10 +91,13 @@ module.exports = {
     // The `template` helper reads the specified template, making the
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
-    './:filename': { template: 'example.template.js' },
+
+    //'./:filename': { template: 'example.template.js' },
 
     // Creates a folder at a static path
-    './assets/:filename': { folder: {} }
+
+    './assets/:filename/index.html': { template: 'index.js' },
+    //'./assets/:filename/scripts/bundle.js': { template: 'index.js' }
 
   },
 
