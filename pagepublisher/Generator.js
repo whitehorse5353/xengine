@@ -97,7 +97,7 @@ module.exports = {
     // Creates a folder at a static path
 
     './assets/:filename/index.html': { template: 'index.js' },
-    //'./assets/:filename/scripts/bundle.js': { template: 'index.js' }
+    './assets/:filename/scripts/main.js': { template: 'main.js' }
 
   },
 

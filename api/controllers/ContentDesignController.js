@@ -11,7 +11,8 @@ var path = require('path');
 var componentFactory = path.resolve(__dirname, '../../component-factory');
 
 function _simpleUtil(filename) {
-  return filename.substring(0, 1).toUpperCase() + filename.substring(1, filename.length)
+  return filename.substring(0, 1).toUpperCase() + filename.substring(1, filename.length);
+  //return filename;
 }
 
 function getComponents(components) {
@@ -35,15 +36,23 @@ function renderComponents(componentsMetaData) {
   });
 }
 
-function executePublisher(pageMetaData, componentMeta, res){
+function executePublisher(pageMetaData, componentMeta, res) {
   var exec = require('child_process').exec;
-  exec('sails generate publisher ' + pageMetaData.pageName+' '+_.keys(componentMeta).join(' '), function (error, stdout, stderr) {
-    console.log(stdout);
+
+  exec('sails generate publisher ' + pageMetaData.pageName + ' ' + _.keys(componentMeta).join(' '), function (error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
 
-    res.end('thanks');
+    console.log(stdout);
+
+    console.log("running browserify ."+path.resolve(__dirname, '/assets/'+pageMetaData.pageName+'/scripts/main.js')+' -t [babelify] >| .'+path.resolve(__dirname, '/assets/'+pageMetaData.pageName+"/scripts/bundle.js"));
+
+    exec('browserify .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/bundle.js'), function (err, stdoutIn, stderrIn) {
+      console.log(stderrIn);
+
+      res.end('page published successfully..!!');
+    });
   });
 }
 
@@ -62,14 +71,6 @@ module.exports = {
         if (err) return res.error(err);
         var ComponentsMeta = getComponents(pageMetaData.components),
           Components = renderComponents(ComponentsMeta);
-
-        //todo: this block of code has to be moved out of this asap
-        //var browserify = require('browserify');
-        //var b = browserify();
-        //b.transform(babelify);
-        //b.require(ComponentRoot, {entry: true});
-        //b.bundle().pipe(process.stdout);
-
         ComponentCollection.find()
           .exec(function (err, components) {
             if (err) return res.error(err);

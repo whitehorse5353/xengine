@@ -1,5 +1,5 @@
 /**
- * This is just an example file created at Sat Sep 05 2015 15:08:18 GMT+0530 (IST).
+ * This is just an example file created at Thu Sep 10 2015 21:50:37 GMT+0530 (IST).
  *
  */
 
@@ -21,6 +21,7 @@ module.exports.Footer = React.createClass({
     }
   },
   render: function(){
-    return <footer className="footer" style={style.footer}><p className="text-muted">{this.state.title}</p></footer>
+    return <footer className="footer" style={style.footer}>
+      <p className="text-muted">{this.state.title}</p></footer>
   }
 });
