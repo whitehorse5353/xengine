@@ -46,7 +46,7 @@ function executePublisher(pageMetaData, componentMeta, res) {
 
     console.log(stdout);
 
-    console.log("running browserify ."+path.resolve(__dirname, '/assets/'+pageMetaData.pageName+'/scripts/main.js')+' -t [babelify] >| .'+path.resolve(__dirname, '/assets/'+pageMetaData.pageName+"/scripts/bundle.js"));
+    console.log("running browserify ." + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + "/scripts/bundle.js"));
 
     exec('browserify .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/bundle.js'), function (err, stdoutIn, stderrIn) {
       console.log(stderrIn);
