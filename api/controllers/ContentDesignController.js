@@ -18,7 +18,7 @@ function _simpleUtil(filename) {
 function getComponents(components) {
   return _.map(components, function (val, key) {
     return {
-      componentPath: componentFactory + '/' + key + '/views/' + key,
+      componentPath: componentFactory + '/' + key + '/scripts/components/' + key + '.Component',
       classPath: [_simpleUtil(key)],
       componentMetaData: val
     };
@@ -29,10 +29,13 @@ function renderComponents(componentsMetaData) {
   require('node-jsx').install();
   return _.map(componentsMetaData, function (componentMetaData) {
     var Component = require(componentMetaData.componentPath)[componentMetaData.classPath];
-    return React.renderToString(React.createElement(Component,
-      {
-        data: componentMetaData.componentMetaData[componentMetaData.componentMetaData.length - 1].title
-      }));
+    return {
+      html: React.renderToString(React.createElement(Component,
+        {
+          data: componentMetaData.componentMetaData[componentMetaData.componentMetaData.length - 1].title
+        })),
+      wrapperName: componentMetaData.classPath[0]
+    };
   });
 }
 
@@ -79,7 +82,7 @@ module.exports = {
               pageName: pageMetaData.pageName,
               pageRefId: req.params['pageId'],
               pageLevelComponents: pageMetaData.components,
-              pageLevelComponentsString: Components.join('')
+              pageLevelComponentCollection: Components
             });
           });
       });

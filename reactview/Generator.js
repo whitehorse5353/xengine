@@ -103,7 +103,10 @@ module.exports = {
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
 
-    './component-factory/:filename/views/:filename.js': { template: 'view.js' },
+    './component-factory/:filename/scripts/actions/:filename.Action.js': { template: 'actions.js' },
+    './component-factory/:filename/scripts/dispatcher/:filename.Dispatcher.js': { template: 'dispatcher.js' },
+    './component-factory/:filename/scripts/stores/:filename.Stores.js': { template: 'store.js' },
+    './component-factory/:filename/scripts/components/:filename.Component.js': { template: 'component.js' },
     './component-factory/:filename/index.html': { template: 'index.js' },
     './component-factory/:filename/styles/:filename.scss': { template: 'sampleSCSS.js' }
 

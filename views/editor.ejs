@@ -1,1 +1,5 @@
-<%- pageLevelComponentsString%>
+<%for(var component in pageLevelComponentCollection){  %>
+<div id="<%=pageLevelComponentCollection[component]['wrapperName']%>">
+  <%- pageLevelComponentCollection[component]['html']%>
+</div>
+<%}%>
