@@ -48,14 +48,22 @@ function executePublisher(pageMetaData, componentMeta, res) {
     }
 
     console.log(stdout);
+    var command;
+    if (process.platform === 'darwin') {
+      command = 'browserify .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/bundle.js');
+      console.log("running " + command);
+    }
 
-    console.log("running browserify ." + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + "/scripts/bundle.js"));
+    if (process.platform === 'win32') {
+      command = 'browserify ' + path.resolve(__dirname, '../../assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] > ' + path.resolve(__dirname, '../../assets/' + pageMetaData.pageName + '/scripts/bundle.js');
+      console.log("running " + command);
+    }
 
-    exec('browserify .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/main.js') + ' -t [babelify] >| .' + path.resolve(__dirname, '/assets/' + pageMetaData.pageName + '/scripts/bundle.js'), function (err, stdoutIn, stderrIn) {
+    exec(command, function (err, stdoutIn, stderrIn) {
       console.log(stderrIn);
-
       res.end('page published successfully..!!');
     });
+
   });
 }
 

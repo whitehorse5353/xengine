@@ -1,3 +1,3 @@
 # Xperience Engine
 
-a [Sails](http://sailsjs.org) application
+a [Sails](http://sailsjs.org) based application
