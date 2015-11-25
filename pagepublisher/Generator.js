@@ -67,6 +67,9 @@ module.exports = {
     // Collecting component array from cmd
     scope.components = scope.args.slice(1, scope.args.length);
 
+    //todo: template engine specific path defenitions
+    scope.pathResolverStringBegins = "${path.relative(__dirname, '";
+    scope.pathResolverStringEnds = "')}";
     // When finished, we trigger a callback with no error
     // to begin generating files/folders as specified by
     // the `targets` below.
@@ -96,7 +99,8 @@ module.exports = {
 
     // Creates a folder at a static path
 
-    './assets/:filename/index.html': { template: 'index.js' },
+    //'./assets/:filename/index.html': { template: 'index.js' },
+    './assets/:filename/template.marko': { template: 'marko-template.js' },
     './assets/:filename/scripts/main.js': { template: 'main.js' }
 
   },

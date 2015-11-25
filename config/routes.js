@@ -31,8 +31,8 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
+  'get /www/*': 'PageController.serve',
+  'get /': {
     view: 'contentDesign'
   },
   'post /createPage': 'ContentDesignController.createPage',

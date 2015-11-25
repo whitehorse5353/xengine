@@ -26,7 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+   //'*': 'staticContent'
 
   /***************************************************************************
   *                                                                          *
@@ -34,6 +34,9 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
+  //PageController: {
+  //  serve: 'staticContent'
+  //}
 	// RabbitController: {
 
 		// Apply the `false` policy as the default for all of RabbitController's actions

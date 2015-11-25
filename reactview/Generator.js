@@ -75,6 +75,11 @@ module.exports = {
     // Decide the output filename for use in targets below:
     scope.filename = scope.args[0];
 
+    //todo: template engine specific path defenitions
+    scope.pathResolverString = "${path.resolve(__dirname, '../../api/controllers/RenderComponentsController')}";
+    scope.rendererClassBegins = "${renderer.serverRenderer('";
+    scope.rendererClassEnds = "')}";
+
     // Add other stuff to the scope for use in our templates:
     scope.whatIsThis = 'an example file created at '+scope.createdAt;
 
@@ -107,6 +112,8 @@ module.exports = {
     './component-factory/:filename/scripts/dispatcher/:filename.Dispatcher.js': { template: 'dispatcher.js' },
     './component-factory/:filename/scripts/stores/:filename.Stores.js': { template: 'store.js' },
     './component-factory/:filename/scripts/components/:filename.Component.js': { template: 'component.js' },
+    './component-factory/:filename/renderer.js': { template: 'marko-renderer.js' },
+    './component-factory/:filename/template.marko': { template: 'marko-template.js' },
     './component-factory/:filename/index.html': { template: 'index.js' },
     './component-factory/:filename/styles/:filename.scss': { template: 'sampleSCSS.js' }
 
