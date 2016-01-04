@@ -16,7 +16,9 @@ module.exports.Header = React.createClass({
   render: function(){
     return <nav className="navbar navbar-default">
       <div className="navbar-header">
-        <a className="navbar-brand" href="#">{this.state.title}</a></div>
+        <a className="navbar-brand" href="#">
+          <img src={this.state.title} />
+        </a></div>
     </nav>
   }
 });

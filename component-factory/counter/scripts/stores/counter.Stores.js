@@ -8,7 +8,7 @@ var counterDispatcher = require("../dispatcher/counter.Dispatcher"),
   eventEmitter = require('events').EventEmitter,
   emitter = new eventEmitter();
 
-var count = 0;
+var count = 1;
 var counterStore = extend(emitter, {
   /* store public methods */
 
@@ -25,7 +25,7 @@ var counterStore = extend(emitter, {
 counterDispatcher.register(function (payload) {
   /* store private methods */
   if (payload.typeOfAction === 'ADD_COUNT') {
-    count += payload.count;
+    count++;
   }
   counterStore.emitChanges();
 
