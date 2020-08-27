@@ -10,7 +10,7 @@
     "browserify": "^11.0.1",
     "ejs": "~0.8.4",
     "flux": "^2.1.1",
-    "glob": "^5.0.14",
+    "glob": "^7.1.6",
     "grunt": "0.4.2",
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-clean": "~0.5.0",
