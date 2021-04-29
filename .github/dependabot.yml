@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: react
+    versions:
+    - 17.0.1
+  - dependency-name: sails
+    versions:
+    - 1.4.0
+  - dependency-name: grunt-contrib-uglify
+    versions:
+    - 5.0.0
+  - dependency-name: grunt-contrib-cssmin
+    versions:
+    - 3.0.0
+  - dependency-name: grunt-browserify
+    versions:
+    - 5.3.0
